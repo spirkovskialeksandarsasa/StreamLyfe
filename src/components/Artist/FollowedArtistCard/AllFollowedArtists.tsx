@@ -16,7 +16,7 @@ function AllFollowedArtistsCards() {
       const followedArtists = await fetchAllFollowedArtists();
       setArtists(followedArtists);
     } catch (error) {
-      console.log("ERROR FETCHING ALL FOLLOWED ARTISTS");
+      console.log("ERROR FETCHING ALL FOLLOWED ARTISTS", error);
       handleError();
     }
   };
@@ -26,7 +26,7 @@ function AllFollowedArtistsCards() {
         console.log("ERROR FETCHING ALL FOLLOWED ARTISTS", error);
       });
     }
-  }, []);
+  }, [handleError]);
 
 
   return (

@@ -5,9 +5,10 @@ import { useAppStore, AppStore } from "../../../../store";
 
 function UserInfo() {
   const isSmallScreen = useMediaQuery("(max-width:880px)");
-  const { user, fetchUserProfile } = useAppStore((state: AppStore) => ({
-    ...state,
-  }));
+  const user = useAppStore((state: AppStore) => state.user);
+  const fetchUserProfile = useAppStore(
+    (state: AppStore) => state.fetchUserProfile
+  );
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -24,7 +25,8 @@ function UserInfo() {
       <span className="flex justify-center">
         <UserImage
           image={
-            user?.images[1]?.url ||
+            user?.images?.[1]?.url ||
+            user?.images?.[0]?.url ||
             "https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651"
           }
         />

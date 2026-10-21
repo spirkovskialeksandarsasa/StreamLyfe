@@ -17,7 +17,7 @@ const {error, handleError} = useErrorHandling();
         const topTracks = await fetchAllTopTracks();
         setTracks(topTracks);
       } catch (error) {
-        console.log("ERROR FETCHING ALL TOP TRACKS");
+        console.log("ERROR FETCHING ALL TOP TRACKS", error);
         handleError();
       }
     };
@@ -27,13 +27,13 @@ const {error, handleError} = useErrorHandling();
         console.log("ERROR FETCHING ALL TOP TRACKS", error);
       });
     }
-  }, []);
+  }, [handleError]);
 
   return (
     <>
       <div className="flex flex-span relative justify-center">
         <div className="relative overflow-y-scroll w-3/5 max-h-[800px] md:max-h-[500px] mb-20">
-        <TrackList tracks={tracks} useSmallCard={false} positionNumber={0}/>
+        <TrackList tracks={tracks} useSmallCard={false}/>
         </div>
       </div>
       {error && ( 

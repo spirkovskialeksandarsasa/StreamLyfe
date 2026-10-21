@@ -1,21 +1,30 @@
-export interface ArtistProps {
-  id: string;
-  name: string;
-  images: Image[];
-  genres: string[];
-  popularity: number;
-}
-
 export interface Image {
   url: string;
-  width: number;
-  height: number;
+  width?: number | null;
+  height?: number | null;
 }
 
 export interface Artist {
-  artist: ArtistProps;
-  showDetails?: boolean;
-  isTopArtist?: boolean;
+  id: string;
+  name: string;
+  uri: string;
+  images: Image[];
+  genres?: string[];
+  popularity?: number;
+  followers?: {
+    total: number;
+  };
+  external_urls?: {
+    spotify: string;
+  };
+}
+
+export interface ArtistProps {
+  artist: Artist;
+}
+
+export interface ArtistListProps {
+  artists: Artist[];
 }
 
 export enum PopularityEnum {

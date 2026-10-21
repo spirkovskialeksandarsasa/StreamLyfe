@@ -1,5 +1,4 @@
 import  { useState, useEffect } from "react";
-import { TERipple } from "tw-elements-react";
 
 function BackToTopButton() {
   const [showButton, setShowButton] = useState(false);
@@ -32,7 +31,6 @@ function BackToTopButton() {
     <>
     
       {showButton && (
-        <TERipple rippleColor="light">
           <button
             type="button"
             onClick={backToTop}
@@ -55,7 +53,6 @@ function BackToTopButton() {
               ></path>
             </svg>
           </button>
-        </TERipple>
       )}
     </>
   );

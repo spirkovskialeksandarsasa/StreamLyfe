@@ -20,7 +20,7 @@ function FollowButton() {
         setFollowing(isFollowing);
         }
       } catch (error) {
-        console.log("ERROR FETCHING ALL TOP TRACKS");
+        console.log("ERROR CHECKING FOLLOWAGE", error);
       }
     };
   
@@ -45,12 +45,15 @@ function FollowButton() {
     }
   }
  const handleFollowToggle = async () => {
-    if(id){
-    const newFollowStatus = await toggleFollowArtist(id, isFollowing);
-    setFollowing(newFollowStatus);
+    if (id) {
+      try {
+        const newFollowStatus = await toggleFollowArtist(id, isFollowing);
+        setFollowing(newFollowStatus);
+      } catch {
+        // Keep the current state when Spotify rejects the change.
+      }
     }
   };
-  console.log(isFollowing);
   return (
     <button
       type="button"

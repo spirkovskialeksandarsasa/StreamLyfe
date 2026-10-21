@@ -21,17 +21,17 @@ function Footer() {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link to="https://open.spotify.com/" className="hover:underline">
+                  <a href="https://open.spotify.com/" className="hover:underline">
                     Spotify
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link
-                    to="https://developer.spotify.com/documentation/web-api"
+                  <a
+                    href="https://developer.spotify.com/documentation/web-api"
                     className="hover:underline"
                   >
                     API Docs
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -41,20 +41,20 @@ function Footer() {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <Link
-                    to="https://github.com/spirkovskialeksandarsasa"
+                  <a
+                    href="https://github.com/spirkovskialeksandarsasa"
                     className="hover:underline "
                   >
                     Github
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link
-                    to="https://www.linkedin.com/in/aleksandarsasaspirkovski10/"
+                  <a
+                    href="https://www.linkedin.com/in/aleksandarsasaspirkovski10/"
                     className="hover:underline"
                   >
                     LinkedIn
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -64,13 +64,16 @@ function Footer() {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <Link to="/privacy" className="hover:underline">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
-                    Terms &amp; Conditions
+                  <a
+                    href="https://developer.spotify.com/terms"
+                    className="hover:underline"
+                  >
+                    Spotify Developer Terms
                   </a>
                 </li>
               </ul>
@@ -80,7 +83,7 @@ function Footer() {
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2023{" "}
+            © 2023-{new Date().getFullYear()}{" "}
             <Link to='/' className="hover:underline">
               Streamlyfe™
             </Link>

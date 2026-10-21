@@ -4,4 +4,5 @@ export interface ArtistSectionProps{
     content: ReactNode;
     linkIns:string;
     title:string;
+    showLink?: boolean;
 }

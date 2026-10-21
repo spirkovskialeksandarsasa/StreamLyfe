@@ -10,7 +10,6 @@ function SearchArtistList({ artists }: ArtistListProps) {
         <SearchArtistCard
           key={artist?.id}
           artist={artist}
-          showDetails={false}
         />
       ))}
     </div>

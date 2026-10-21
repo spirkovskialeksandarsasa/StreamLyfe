@@ -6,9 +6,6 @@ import ErrorMessage from "../../generic/ErrorMessage/ErrorMessage.tsx";
 import { useErrorHandling } from "../../generic/ErrorMessage/ErrorLogic.ts";
 
 function TopArtistCards() {
-  function tokenExpiry() {
-    window.localStorage.removeItem("token");
-  }
   const [artists, setArtists] = useState<Artist[]>([]);
 const {error, handleError} = useErrorHandling();
   useEffect(() => {
@@ -19,8 +16,7 @@ const {error, handleError} = useErrorHandling();
         const topArtists = await fetchTopArtists();
         setArtists(topArtists);
       } catch (error) {
-        console.log("ERROR FETCHING TOP ARTISTS");
-        tokenExpiry();
+        console.log("ERROR FETCHING TOP ARTISTS", error);
         handleError();
       }
     };
@@ -30,7 +26,7 @@ const {error, handleError} = useErrorHandling();
         console.log("ERROR FETCHING TOP ARTISTS", error);
       });
     }
-  }, []);
+  }, [handleError]);
 
 
 

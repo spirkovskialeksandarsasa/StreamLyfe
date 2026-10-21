@@ -7,7 +7,6 @@ import AlbumList from "../AlbumList/AlbumList";
 function AlbumSection() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const { id } = useParams();
-  console.log(albums);
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     const fetchData = async () => {
@@ -17,7 +16,7 @@ function AlbumSection() {
         setAlbums(discography);
         }
       } catch (error) {
-        console.log("ERROR FETCHING ALBUMS");
+        console.log("ERROR FETCHING ALBUMS", error);
       }
     };
     if (token) {

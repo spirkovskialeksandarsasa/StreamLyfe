@@ -5,42 +5,33 @@ import { searchArtists } from "../../../../spotifyApi";
 import { searchProps } from "./Search.types";
 import { useState, useEffect } from "react";
 import { Artist } from "../../../../types/Artist.types";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import SearchArtistList from "../../../Artist/SearchArtist/SearchArtistList/SearchArtistList";
 
 function Search({ search, onSearch }: searchProps) {
   const [artists, setArtists] = useState<Artist[]>([]);
-  const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout> | null>(null);
   const [showSearchResult, setShowSearchResult] = useState(false);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
+    const query = search.trim();
+    if (!token || !query) return;
 
-    if (token) {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      const newTimeoutId = setTimeout(() => {
-        void fetchData();
-      }, 400);
-      setTimeoutId(newTimeoutId);
-    }
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+    const fetchData = async () => {
+      try {
+        const artistResults = await searchArtists(query);
+        setArtists(artistResults);
+        setShowSearchResult(true);
+      } catch (error) {
+        console.log("ERROR SEARCHING ARTISTS", error);
       }
     };
-  }, [search]);
 
-  const fetchData = async () => {
-    try {
-      const artistResults = await searchArtists(search);
-      setArtists(artistResults);
-      setShowSearchResult(true);
-    } catch (error) {
-      console.log("ERROR FETCHING RELATED ARTISTS");
-    }
-  };
+    const timeoutId = setTimeout(() => {
+      void fetchData();
+    }, 400);
+    return () => clearTimeout(timeoutId);
+  }, [search]);
 
   const handleClickAway = () => {
     setShowSearchResult(false);

@@ -1,17 +1,17 @@
-export interface AlbumProps {
-    name: string;
-    album_type: string;
-    release_date: string;
-    id: string;
-    images: {
-      url: string;
-    }[];
-  }
-  
-  export interface Album {
-    album: AlbumProps;
-  }
+import { Image } from "./Artist.types";
+
+export interface Album {
+  id: string;
+  name: string;
+  album_type: string;
+  release_date: string;
+  images: Image[];
+}
+
+export interface AlbumCardProps {
+  album: Album;
+}
+
 export interface AlbumListProps {
-    albums: Album[];
-  }
-  
+  albums: Album[];
+}

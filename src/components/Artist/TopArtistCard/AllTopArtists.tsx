@@ -17,7 +17,7 @@ const {error, handleError} = useErrorHandling();
         const topArtists = await fetchAllTopArtists();
         setArtists(topArtists);
       } catch (error) {
-        console.log("ERROR FETCHING TOP ARTISTS");
+        console.log("ERROR FETCHING TOP ARTISTS", error);
         handleError();
       }
     };
@@ -28,7 +28,7 @@ const {error, handleError} = useErrorHandling();
         console.log("ERROR FETCHING ALL TOP ARTISTS", error);
       });
     }
-  }, []);
+  }, [handleError]);
 
 
   return (

@@ -2,7 +2,7 @@ import TopTracks from "./TopTracksSection/TopTracks";
 import ArtistSection from "./ArtistSection/ArtistSection";
 import TopArtistCards from "../Artist/TopArtistCard/TopArtistCards";
 import FollowedArtistsCards from "../Artist/FollowedArtistCard/FollowedArtistsCards";
-import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function HomeAuthorized() {
   const isSmallScreen = useMediaQuery("(max-width:1023px)");

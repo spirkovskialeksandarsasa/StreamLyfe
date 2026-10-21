@@ -1,6 +1,6 @@
 import ArtistCard from "../ArtistCard";
 import { ArtistListProps } from "../../../types/Artist.types";
-import useMediaQuery from "@mui/material/useMediaQuery/useMediaQuery";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import classNames from "classnames";
 
 function ArtistList({ artists }: ArtistListProps) {

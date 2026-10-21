@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { fetchArtistById, fetchTracksByArtist } from "../spotifyApi";
 import { useParams } from "react-router-dom";
 import { Artist } from "../types/Artist.types";
-import ArtistSection from "../components/HomeAuthorized/ArtistSection/ArtistSection";
-import RelatedArtistCards from "../components/Artist/RelatedArtist/RelatedArtistCards";
 import BackToTopButton from "../components/ui/BackToTopButton/BackToTopButton";
 import AlbumSection from "../components/Album/AlbumSection/AlbumSection";
 import { Track } from "../types/Track.types";
@@ -13,7 +11,7 @@ import TrackFromArtistList from "../components/Track/TrackFromArtist/TrackFromAr
 function ArtistPage() {
   const { id } = useParams();
   const [artist, setArtist] = useState<Artist>();
-  const [tracks, setTracks] = useState<Track>();
+  const [tracks, setTracks] = useState<Track[]>([]);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -22,9 +20,8 @@ function ArtistPage() {
       try {
         if (id) {
           const artistById = await fetchArtistById(id);
-          const tracksOfArtist = await fetchTracksByArtist(id);
           setArtist(artistById);
-          setTracks(tracksOfArtist);
+          setTracks(await fetchTracksByArtist(artistById));
         }
       } catch (error) {
         console.log("ERROR FETCHING ARTIST BY ID", error);
@@ -58,21 +55,6 @@ function ArtistPage() {
       <TrackFromArtistList tracks={tracks}/>
       </div>
       </div>
-      <h1 className="text-center text-3xl  flex justify-center lg:mt-0">
-        Similar Artists
-      </h1>
-     
-      <div className=" flex mx-auto justify-center h-fit w-full mb-10">
-        <ArtistSection
-          content={<RelatedArtistCards />}
-          linkIns=""
-          title=""
-          showLink={false}
-        />
-
-       
-      </div>
-      
       <BackToTopButton />
     </>
   );

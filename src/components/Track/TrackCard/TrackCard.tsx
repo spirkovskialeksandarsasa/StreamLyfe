@@ -11,7 +11,7 @@ function TrackCard({ track, positionNumber }: TrackCardProps) {
         <div className="flex-grow p-2">
           <h3 className="text-sm font-bold mb-1 text-stone-100">{track?.name}</h3>
           <div className="text-white text-xs">
-           {track?.artists[0]?.name}
+           {track?.artists?.[0]?.name}
           </div>
         </div>
       </div>

@@ -12,68 +12,69 @@ import FollowedArtistsPage from "./pages/FollowedArtistsPage";
 import SpotifyPlayer from "react-spotify-web-playback";
 import ArtistPage from "./pages/ArtistPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import CallbackPage from "./pages/CallbackPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import { getAccessToken } from "./auth";
+import { useAppStore } from "./store";
+
 function App() {
-  const [token, setToken] = useState("");
+  const token = useAppStore((state) => state.token);
+  const setToken = useAppStore((state) => state.setToken);
+  const logout = useAppStore((state) => state.logout);
+  const expiredToken = useAppStore((state) => state.sessionExpired);
+  const expireSession = useAppStore((state) => state.expireSession);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
+    const checkSession = async () => {
+      if (useAppStore.getState().token) {
+        const accessToken = await getAccessToken();
+        if (accessToken) {
+          setToken(accessToken);
+        } else {
+          expireSession();
+        }
+      }
+      setLoading(false);
+    };
+    void checkSession();
+  }, [setToken, expireSession]);
 
-    if (!token && hash) {
-      const accessTokenParam = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"));
-      token = accessTokenParam?.split("=")[1] ?? "";
-      window.location.hash = "";
-      window.localStorage.setItem("token", token);
-      setToken(token);
+  const getOAuthToken = async (callback: (token: string) => void) => {
+    const accessToken = await getAccessToken();
+    if (accessToken) {
+      callback(accessToken);
+    } else {
+      expireSession();
     }
-    console.log(token);
-
-    setLoading(false);
-  }, []);
-
-  const logout = () => {
-    setToken("");
-    window.localStorage.removeItem("token");
   };
 
-  const [expiredToken, setExpiredToken] = useState(false);
-  function tokenExpiry() {
-    setExpiredToken(true);
-    setToken("");
-    window.localStorage.removeItem("token");
-  }
-  const timeoutInterval = 3600 * 1000; // 1h
-  setTimeout(tokenExpiry, timeoutInterval);
-
   if (loading) return <LoadingSpinner />;
-  const activeToken = window.localStorage.getItem("token");
   return (
     <>
-      {activeToken && <Navbar onLogout={logout} />}
+      {token && <Navbar onLogout={logout} />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/callback" element={<CallbackPage />} />
         <Route path="/topartists" element={<TopArtistsPage />} />
         <Route path="/toptracks" element={<TopTracksPage />} />
         <Route path="/following" element={<FollowedArtistsPage />} />
         <Route path="/artist/:id" element={<ArtistPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
 
-      {activeToken && (
+      {token && (
         <div className="sticky bottom-0">
           <SpotifyPlayer
-            token={activeToken}
+            token={token}
+            getOAuthToken={getOAuthToken}
             magnifySliderOnHover={true}
             initialVolume={0.5}
             name={"StreamLyfe"}
             uris={["spotify:playlist:62olrSGEXBQFymtqG2dyRc"]}
             persistDeviceSelection={true}
-            showSaveIcon={true}
             syncExternalDevice={true}
             styles={{
               activeColor: "#fff",

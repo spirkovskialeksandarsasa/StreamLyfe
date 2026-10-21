@@ -1,9 +1,9 @@
 import { TrackFromArtistCardProps } from "./TrackFromArtistCardProps";
 
 function TrackFromArtistCard({ track, positionNumber }: TrackFromArtistCardProps) {
-    const date = new Date(track?.duration_ms);
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const totalSeconds = Math.round((track?.duration_ms ?? 0) / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
 
   return (
     <div className="flex items-center justify-center w-full p-2">

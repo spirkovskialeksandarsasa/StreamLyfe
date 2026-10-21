@@ -15,7 +15,7 @@ function SearchArtistCard({ artist }: SearchArtistProps) {
           <div className="flex flex-row">
             <img
               className="w-14 h-16 object-center"
-              src={artist?.images[2]?.url || 'https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651'}
+              src={artist?.images?.[2]?.url || artist?.images?.[0]?.url || 'https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651'}
               alt={artist?.name}
             />
             <div className="p-4 w-2/3">

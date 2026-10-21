@@ -1,22 +1,21 @@
+import { Image } from "./Artist.types";
 
-import { Artist } from "./Artist.types";
-export interface Track {
+export interface TrackArtist {
+  id: string;
   name: string;
-  image: string;
-  album: Album;
-  id:string;
-  artists: Artist[];
-  duration: number;
 }
 
 export interface Album {
   images: Image[];
 }
 
-export interface Image {
-  url: string;
-  width?: number;
-  height?: number;
+export interface Track {
+  id: string;
+  name: string;
+  uri: string;
+  duration_ms: number;
+  album: Album;
+  artists: TrackArtist[];
 }
 
 export interface TrackProps {
@@ -27,7 +26,4 @@ export interface TrackProps {
 export interface TrackListProps {
   tracks: Track[];
   useSmallCard: boolean;
-  positionNumber: number;
 }
-
-

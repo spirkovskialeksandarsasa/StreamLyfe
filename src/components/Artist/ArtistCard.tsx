@@ -27,7 +27,8 @@ function ArtistCard({ artist, showDetails }: ArtistCardProps) {
           <img
             className="w-full h-24 2xl:h-32 object-cover"
             src={
-              artist?.images[2]?.url ||
+              artist?.images?.[2]?.url ||
+              artist?.images?.[0]?.url ||
               "https://i.scdn.co/image/ab6761610000e5eba1b1a48354e9a91fef58f651"
             }
             alt={artist?.name}
@@ -39,11 +40,13 @@ function ArtistCard({ artist, showDetails }: ArtistCardProps) {
         {showDetails && (
           <div className="w-32 h-6">
             <p className="text-white text-center">
-              {artist?.genres[0] ? artist.genres[0] : "unknown genre"}
+              {artist?.genres?.[0] ?? "unknown genre"}
             </p>
-            <p className="text-green-300 italic text-xs text-center">
-              {popularityFinal(artist.popularity)}
-            </p>
+            {artist.popularity !== undefined && (
+              <p className="text-green-300 italic text-xs text-center">
+                {popularityFinal(artist.popularity)}
+              </p>
+            )}
           </div>
         )}
       </div>
